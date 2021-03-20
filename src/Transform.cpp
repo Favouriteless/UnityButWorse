@@ -75,7 +75,5 @@ void Transform::recalculateTransformMatrix()
 
 glm::mat4 Transform::getTransformMatrix()
 {
-	if (isDirty)
-		recalculateTransformMatrix();
 	return transformMatrix;
 }
