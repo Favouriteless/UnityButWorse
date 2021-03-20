@@ -1,0 +1,81 @@
+#include "Transform.h"
+
+
+
+Transform::Transform(glm::vec3 _position, glm::vec3 _rotation, glm::vec3 _scale)
+{
+	setPosition(_position);
+	setRotation(_rotation);
+	setScale(_scale);
+}
+
+glm::vec3 Transform::getPosition()
+{
+	return position;
+}
+
+glm::vec3 Transform::getRotation()
+{
+	return rotation;
+}
+
+glm::vec3 Transform::getScale()
+{
+	return scale;
+}
+
+void Transform::setPosition(glm::vec3 _position)
+{
+	position = _position;
+	isDirty = true;
+}
+
+void Transform::setRotation(glm::vec3 _rotation)
+{
+	rotation = _rotation;
+	recalculateRotationMatrix();
+}
+
+void Transform::setScale(glm::vec3 _scale)
+{
+	scale = _scale;
+	isDirty = true;
+}
+
+void Transform::translate(glm::vec3 _offset)
+{
+	setPosition(position + _offset);
+}
+
+void Transform::recalculatePositionMatrix()
+{
+	positionMatrix = glm::translate(glm::mat4(1.0f), position);
+	isDirty = true;
+}
+
+void Transform::recalculateRotationMatrix()
+{
+	rotationMatrix = glm::rotate(glm::mat4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	isDirty = true;
+}
+
+void Transform::recalculateScaleMatrix()
+{
+	scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
+	isDirty = true;
+}
+
+void Transform::recalculateTransformMatrix()
+{
+	glm::mat4 newTransform(1.0f);
+	newTransform *= scaleMatrix;
+	newTransform *= rotationMatrix;
+	newTransform *= positionMatrix;
+}
+
+glm::mat4 Transform::getTransformMatrix()
+{
+	return transformMatrix;
+}
