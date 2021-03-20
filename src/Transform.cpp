@@ -2,7 +2,7 @@
 
 
 
-Transform::Transform(glm::vec3 _position, float _rotation, glm::vec3 _scale)
+Transform::Transform(glm::vec3 _position, glm::vec3 _rotation, glm::vec3 _scale)
 {
 	setPosition(_position);
 	setRotation(_rotation);
@@ -14,7 +14,7 @@ glm::vec3 Transform::getPosition()
 	return position;
 }
 
-float Transform::getRotation()
+glm::vec3 Transform::getRotation()
 {
 	return rotation;
 }
@@ -30,7 +30,7 @@ void Transform::setPosition(glm::vec3 _position)
 	isDirty = true;
 }
 
-void Transform::setRotation(float _rotation)
+void Transform::setRotation(glm::vec3 _rotation)
 {
 	rotation = _rotation;
 	recalculateRotationMatrix();
@@ -55,7 +55,9 @@ void Transform::recalculatePositionMatrix()
 
 void Transform::recalculateRotationMatrix()
 {
-	rotationMatrix = glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+	rotationMatrix = glm::rotate(glm::mat4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 	isDirty = true;
 }
 
