@@ -67,10 +67,10 @@ void Transform::recalculateScaleMatrix()
 
 void Transform::recalculateTransformMatrix()
 {
-	glm::mat4 newTransform(1.0f);
-	newTransform *= scaleMatrix;
-	newTransform *= rotationMatrix;
-	newTransform *= positionMatrix;
+	transformMatrix = glm::mat4(1.0f);
+	transformMatrix *= scaleMatrix;
+	transformMatrix *= rotationMatrix;
+	transformMatrix *= positionMatrix;
 }
 
 glm::mat4 Transform::getTransformMatrix()
