@@ -29,21 +29,21 @@ int main()
 
 	// MESH DATA --------------------------------------------------------------------------
 
-	float vertices[] {
-		-0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,
-		0.0f, 0.5f, 0.0f,       0.0f, 1.0f, 0.0f,
-		0.5f, -0.5f, 0.0f,      0.0f, 0.0f, 1.0f
-	};
+	float vertices[] = {
+		// positions         // colors
+		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
+	};	
 
 	// RENDER INITIALIZATION --------------------------------------------------------------
 
 	Shader shaderProgram("src/shaders/vertex.glsl", "src/shaders/fragment.glsl");
-	shaderProgram.use();
 
 	unsigned int VBO, VAO;
 
+	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &VAO);
 
 	glBindVertexArray(VAO);
 
@@ -59,6 +59,8 @@ int main()
 	glEnableVertexAttribArray(1);
 
 	// RENDER LOOP ------------------------------------------------------------------------
+
+	shaderProgram.use();
 
 	while (!glfwWindowShouldClose(window))
 	{

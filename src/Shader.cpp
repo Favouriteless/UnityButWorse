@@ -47,7 +47,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	// READ FRAGMENT SHADER
 	try
 	{
-		fShaderFile.open(vertexPath);
+		fShaderFile.open(fragmentPath);
 
 		// Copy file to string stream
 		std::stringstream fShaderStream;
