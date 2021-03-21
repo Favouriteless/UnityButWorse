@@ -6,8 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <assimp/Importer.hpp>
 #include <Shader.h>
-#include <Mesh.h>
 
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
