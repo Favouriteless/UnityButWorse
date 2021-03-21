@@ -27,19 +27,22 @@ glm::vec3 Transform::getScale()
 void Transform::setPosition(glm::vec3 _position)
 {
 	position = _position;
-	isDirty = true;
+	positionIsDirty = true;
+	transformIsDirty = true;
 }
 
 void Transform::setRotation(glm::vec3 _rotation)
 {
 	rotation = _rotation;
-	recalculateRotationMatrix();
+	rotationIsDirty = true;
+	transformIsDirty = true;
 }
 
 void Transform::setScale(glm::vec3 _scale)
 {
 	scale = _scale;
-	isDirty = true;
+	scaleIsDirty = true;
+	transformIsDirty = true;
 }
 
 void Transform::translate(glm::vec3 _offset)
@@ -50,7 +53,7 @@ void Transform::translate(glm::vec3 _offset)
 void Transform::recalculatePositionMatrix()
 {
 	positionMatrix = glm::translate(glm::mat4(1.0f), position);
-	isDirty = true;
+	positionIsDirty = false;
 }
 
 void Transform::recalculateRotationMatrix()
@@ -58,26 +61,34 @@ void Transform::recalculateRotationMatrix()
 	rotationMatrix = glm::rotate(glm::mat4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
 	rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	isDirty = true;
+	rotationIsDirty = false;
 }
 
 void Transform::recalculateScaleMatrix()
 {
 	scaleMatrix = glm::scale(glm::mat4(1.0f), scale);
-	isDirty = true;
+	scaleIsDirty = false;
 }
 
 void Transform::recalculateTransformMatrix()
 {
+	if (positionIsDirty)
+		recalculatePositionMatrix();
+	if (rotationIsDirty)
+		recalculateRotationMatrix();
+	if (scaleIsDirty)
+		recalculateScaleMatrix();
+
 	transformMatrix = glm::mat4(1.0f);
 	transformMatrix *= scaleMatrix;
 	transformMatrix *= rotationMatrix;
 	transformMatrix *= positionMatrix;
+	transformIsDirty = false;
 }
 
 glm::mat4 Transform::getTransformMatrix()
 {
-	if (isDirty)
+	if (transformIsDirty)
 		recalculateTransformMatrix();
 	return transformMatrix;
 }

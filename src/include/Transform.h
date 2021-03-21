@@ -11,13 +11,13 @@ public:
 	glm::vec3 getRotation();
 	glm::vec3 getScale();
 
-	void setPosition(glm::vec3 _position); // Sets position -- Recalculate position matrix
-	void setRotation(glm::vec3 _rotation); // Sets rotation -- Recalculate rotation matrix
-	void setScale(glm::vec3 _scale); // Sets scale -- Recalculate scale matrix
+	void setPosition(glm::vec3 _position); // Sets position -- Mark as dirty
+	void setRotation(glm::vec3 _rotation); // Sets rotation -- Mark as dirty
+	void setScale(glm::vec3 _scale); // Sets scale -- Mark as dirty
 
 	void translate(glm::vec3 _offset); // Position += offset
 
-	glm::mat4 getTransformMatrix();
+	glm::mat4 getTransformMatrix(); // Handles transform dirty flag before returning
 
 	Transform(glm::vec3 _position, glm::vec3 _rotation, glm::vec3 _scale);
 
@@ -26,7 +26,7 @@ private:
 	glm::vec3 rotation;
 	glm::vec3 scale;
 
-	bool isDirty; // Recalculate final transform matrix if true
+	bool transformIsDirty = false, positionIsDirty = false, rotationIsDirty = false, scaleIsDirty = false; // Recalculate matrix if true
 
 	glm::mat4 positionMatrix;
 	glm::mat4 rotationMatrix;
@@ -38,7 +38,7 @@ private:
 	void recalculateRotationMatrix(); // Mark as dirty
 	void recalculateScaleMatrix(); // Mark as dirty
 
-	void recalculateTransformMatrix();
+	void recalculateTransformMatrix(); // Handle dirty flags before recalculating
 };
 
 #endif
