@@ -1,0 +1,24 @@
+#ifndef CAMERA_H
+#define CAMERA_H
+
+#include <Transform.h>
+#include <memory>
+
+class Camera {
+public:
+	Transform transform; // DO NOT CREATE COPIES OF THIS
+
+	void setFov(float _fov);
+
+	glm::mat4 getViewMatrix();
+
+	Camera(glm::vec3 _position, glm::vec3 _rotation, float _fov);
+
+private:
+	glm::mat4 viewMatrix;
+	float fov; // Currently no use -- need to implement this
+
+	void recalculateViewMatrix(); // Handle dirty flags before recalculating
+};
+
+#endif

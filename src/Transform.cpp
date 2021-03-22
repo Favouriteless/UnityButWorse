@@ -1,7 +1,5 @@
 #include "Transform.h"
 
-
-
 Transform::Transform(glm::vec3 _position, glm::vec3 _rotation, glm::vec3 _scale)
 {
 	setPosition(_position);
@@ -28,21 +26,21 @@ void Transform::setPosition(glm::vec3 _position)
 {
 	position = _position;
 	positionIsDirty = true;
-	transformIsDirty = true;
+	isDirty = true;
 }
 
 void Transform::setRotation(glm::vec3 _rotation)
 {
 	rotation = _rotation;
 	rotationIsDirty = true;
-	transformIsDirty = true;
+	isDirty = true;
 }
 
 void Transform::setScale(glm::vec3 _scale)
 {
 	scale = _scale;
 	scaleIsDirty = true;
-	transformIsDirty = true;
+	isDirty = true;
 }
 
 void Transform::translate(glm::vec3 _offset)
@@ -83,12 +81,17 @@ void Transform::recalculateTransformMatrix()
 	transformMatrix *= scaleMatrix;
 	transformMatrix *= rotationMatrix;
 	transformMatrix *= positionMatrix;
-	transformIsDirty = false;
+	isDirty = false;
 }
 
 glm::mat4 Transform::getTransformMatrix()
 {
-	if (transformIsDirty)
+	if (isDirty)
 		recalculateTransformMatrix();
 	return transformMatrix;
+}
+
+bool Transform::getDirty()
+{
+	return isDirty;
 }
