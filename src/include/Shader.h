@@ -1,5 +1,4 @@
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #include <string>
 
@@ -16,4 +15,3 @@ public:
 private:
 	void checkCompileErrors(unsigned int shader, std::string type);
 };
-#endif

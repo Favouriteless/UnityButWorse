@@ -1,5 +1,4 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+#pragma once
 
 #include <Transform.h>
 #include <memory>
@@ -20,5 +19,3 @@ private:
 
 	void recalculateViewMatrix(); // Handle dirty flags before recalculating
 };
-
-#endif

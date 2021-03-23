@@ -1,5 +1,4 @@
-#ifndef TRANSFORM_H
-#define TRANSFORM_H
+#pragma once
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -44,5 +43,3 @@ private:
 
 	void recalculateTransformMatrix(); // Handle dirty flags before recalculating
 };
-
-#endif
