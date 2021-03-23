@@ -5,8 +5,6 @@
 
 class Camera {
 public:
-	Transform transform; // DO NOT CREATE COPIES OF THIS
-
 	void setFov(float _fov);
 
 	glm::mat4 getViewMatrix();
