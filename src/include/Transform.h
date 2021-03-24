@@ -43,3 +43,4 @@ private:
 
 	void recalculateTransformMatrix(); // Handle dirty flags before recalculating
 };
+
