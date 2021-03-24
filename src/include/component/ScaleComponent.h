@@ -1,8 +1,9 @@
 #pragma once
 
 #include <glm/gtc/type_ptr.hpp>
+#include <component/TransformComponent.h>
 
-struct ScaleComponent {
+struct PositionComponent : TransformComponent {
 public:
 	glm::vec3 scale;
 };
